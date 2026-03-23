@@ -22,9 +22,9 @@ title: Github Pages with Jekyll Tutorial
 email: fake@fake.com
 description: >- # this means to ignore newlines until "baseurl:"
   This is a tutorial on how to setup a github pages website using Jekyll.
-baseurl: "/cweil11.github.io/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 domain: cweil11.github.io
-url: "https://cweil11.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://cweil11.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  cweil11
 
 # Build settings
