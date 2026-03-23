@@ -19,7 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Github Pages with Jekyll Tutorial
-email: chrisweil11@gmail.com
+email: fake@fake.com
 description: >- # this means to ignore newlines until "baseurl:"
   This is a tutorial on how to setup a github pages website using Jekyll.
 baseurl: "/cweil11.github.io/docs" # the subpath of your site, e.g. /blog
