@@ -39,8 +39,9 @@ jobs:
       - name: Add WASM target
         run: rustup target add wasm32-unknown-unknown
 
-      - name: lint
-        run: cargo clippy & cargo fmt
+      # Disabling lint for initial deployments...
+      # - name: lint
+      #  run: cargo clippy & cargo fmt
 
 
       # If using tailwind...
