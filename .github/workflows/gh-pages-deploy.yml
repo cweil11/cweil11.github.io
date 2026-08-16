@@ -47,6 +47,14 @@ jobs:
       # If using tailwind...
       # - name: Download and install tailwindcss binary
       #   run: npm install -D tailwindcss && npx tailwindcss -i ./input.css -o ./style/output.css  # run tailwind
+      - name: Download Tailwind v4 Standalone CLI
+        run: |
+          curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.3.3/tailwindcss-linux-x64
+          chmod +x tailwindcss-linux-x64
+          mv tailwindcss-linux-x64 tailwindcss
+      
+      - name: Build CSS
+        run: ./tailwindcss --input input.css --output dist/.stage/input.css --minify
 
 
       - name: Download and install Trunk binary
