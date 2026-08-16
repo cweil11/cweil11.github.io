@@ -30,12 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # repo checkout
 
-      # Setup Node js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
       # Install Rust Nightly Toolchain, with Clippy & Rustfmt
       - name: Install nightly Rust
         uses: dtolnay/rust-toolchain@nightly
