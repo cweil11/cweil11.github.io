@@ -22,7 +22,7 @@ pub fn App() -> impl IntoView {
         <Title formatter=|text| format!("{text} - Reading Wrapped") />
         
         <ConfigProvider>
-            <Router base="/cweil11.github.io">
+            <Router>
                 <main class="bg-gradient-to-br from-amber-50 via-orange-50/40 to-stone-100 min-h-screen text-slate-800 flex flex-col justify-between selection:bg-amber-200 selection:text-amber-900">
                     <div class="max-w-4xl mx-auto w-full p-4 sm:p-6 md:p-8 flex-grow">
                         <Routes fallback=|| view! { <NotFound/> }>
