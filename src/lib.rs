@@ -1,5 +1,6 @@
 use std::{collections::HashMap, error::Error};
 use chrono::NaiveDate;
+use ordered_float::OrderedFloat;
 use serde::{Deserialize, Deserializer};
 
 // Record Struct
@@ -35,7 +36,7 @@ pub struct Record {
     #[serde(rename = "ISBN13", deserialize_with = "deserialize_isbn")]
     pub isbn_13: Option<String>,
     #[serde(rename = "My Rating")]
-    pub rating: Option<i32>,
+    pub rating: Option<OrderedFloat<f32>>,
     #[serde(rename = "Publisher")]
     pub publisher: Option<String>,
     #[serde(rename = "Binding")]
@@ -115,18 +116,18 @@ impl SectionCollector {
 
 pub struct RatingStats {
     pub average_rating: f32,
-    pub top_rating: i32,
-    pub low_rating: i32,
-    pub rating_breakdown: Vec<(i32, i32)>
+    pub top_rating: f32,
+    pub low_rating: f32,
+    pub rating_breakdown: Vec<(f32, i32)>
 }
 
 #[derive(Default)]
 struct RatingCollector {
-    sum: i32,
+    sum: f32,
     count: i32,
-    top: i32,
-    low: i32,
-    breakdown: HashMap<i32, i32>
+    top: f32,
+    low: f32,
+    breakdown: HashMap<OrderedFloat<f32>, i32>
 }
 
 impl RatingCollector {
@@ -135,25 +136,29 @@ impl RatingCollector {
             return;
         };
 
-        if rating > 0 {
-            self.sum += rating;
+        if rating > OrderedFloat(0.0) {
+            self.sum += rating.0;
             self.count += 1;
-            if self.count == 1 || rating > self.top { self.top = rating; }
-            if self.count == 1 || rating < self.low { self.low = rating; }
+            if self.count == 1 || rating.0 > self.top { self.top = rating.0; }
+            if self.count == 1 || rating.0 < self.low { self.low = rating.0; }
 
             *self.breakdown.entry(rating).or_insert(0) += 1;
         }
     }
 
     fn finalize(self) -> RatingStats {
-        let average_rating = if self.count > 0 { self.sum as f32 / self.count as f32 } else { 0.0 };
-        let mut rating_breakdown: Vec<(i32, i32)> = self.breakdown.into_iter().collect();
-        rating_breakdown.sort_by_key(|k| k.0);
+        let average_rating = if self.count > 0 { self.sum / self.count as f32 } else { 0.0 };
+        let mut intial_rating_breakdown: Vec<(OrderedFloat<f32>, i32)> = self.breakdown.into_iter().collect();
+        intial_rating_breakdown.sort_by_key(|k| k.0);
+        let rating_breakdown = intial_rating_breakdown
+            .into_iter()
+            .map(|(k, v )| (k.0, v))
+            .collect();
 
         RatingStats {
             average_rating,
-            top_rating: if self.count > 0 { self.top } else { 0 },
-            low_rating: if self.count > 0 { self.low } else { 0 },
+            top_rating: if self.count > 0 { self.top } else { 0.0 },
+            low_rating: if self.count > 0 { self.low } else { 0.0 },
             rating_breakdown
         }
     }
