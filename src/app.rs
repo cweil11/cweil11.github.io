@@ -389,11 +389,11 @@ fn Wrapped() -> impl IntoView {
                                                             />
                                                             <SectionInnerCard
                                                                 title=format!("Top Rating")
-                                                                value=format!("{} stars", rating_section.top_rating.to_formatted_string(&Locale::en))
+                                                                value=format!("{:.2} stars", rating_section.top_rating)
                                                             />
                                                             <SectionInnerCard
                                                                 title=format!("Lowest Rating")
-                                                                value=format!("{} stars", rating_section.low_rating.to_formatted_string(&Locale::en))
+                                                                value=format!("{:.2} stars", rating_section.low_rating)
                                                             />
                                                             <SectionInnerCard
                                                                 title=format!("Rating Breakdown")
